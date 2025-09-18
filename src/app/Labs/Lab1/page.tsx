@@ -50,13 +50,13 @@ export default function Lab1() {
                 <ul id="wd-my-books">
                     <li>Dune</li>
                     <li>Lord of the Rings</li>
-                    <li>Ender's Game</li>
+                    <li>Ender&apos;s Game</li>
                     <li>Red Mars</li>
                     <li>The Forever War</li>
                 </ul>
                 Your favorite books (in no particular order)
                 <ul id="wd-your-books">
-                    <li>The Hitchhiker's Guide to the Galaxy</li>
+                    <li>The Hitchhiker&apos;s Guide to the Galaxy</li>
                     <li>Project Hail Mary</li>
                     <li>The Martian</li>
                 </ul>

@@ -1,131 +1,128 @@
 import Link from "next/link";
-import Image from "next/image";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import CardImg from 'react-bootstrap/CardImg';
+import CardBody from 'react-bootstrap/CardBody';
+import CardTitle from 'react-bootstrap/CardTitle';
+import CardText from 'react-bootstrap/CardText';
 
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses (12)</h2> <hr />
+      <h2 id="wd-dashboard-published">Published Courses (7)</h2> <hr />
       <div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/reactjs.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for React JS" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>CS1234 React JS</h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack software developer
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/3000" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/cs3000.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for CS 3000" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>CS3000 Algorithms</h5>
-              <p className="wd-dashboard-course-title">
-                Introduction to Data Structures and Algorithms
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1365" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/math1365.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for MATH 1365" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>MATH1365 Discrete Mathematics</h5>
-              <p className="wd-dashboard-course-title">
-                Mathematical concepts for computer science
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/3001" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/ds3000.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for DS 3000" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>DS3000 Introduction to Data Science</h5>
-              <p className="wd-dashboard-course-title">
-                Fundamentals of data analysis and machine learning
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1112" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/comm1112.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for COMM 1112" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>COMM1112 Public Speaking</h5>
-              <p className="wd-dashboard-course-title">
-                Techniques for effective public communication
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1131" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/comm1131.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for COMM 1131" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>COMM1131 Sex, Relationships, and Communication</h5>
-              <p className="wd-dashboard-course-title">
-                Communication within the context of close relationships
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/3500" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/cs3500.jpg" 
-              width={200} 
-              height={150} 
-              alt="Course image for CS 3500" 
-            />
-            <div className="wd-dashboard-course-details">
-              <h5>CS3500 Object-Oriented Design</h5>
-              <p className="wd-dashboard-course-title">
-                Principles of modern software design
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
+        <Row xs={1} md={5} className="g-4">
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/1234/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/reactjs.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS1234 React JS</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Full Stack software developer
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          {/* Repeat the same Card structure for your other courses... */}
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/3000/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/cs3000.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS3000 Algorithms</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Introduction to Data Structures and Algorithms
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/1365/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/math1365.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">MATH1365 Discrete Mathematics</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Mathematical concepts for computer science
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/3001/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/ds3000.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">DS3000 Introduction to Data Science</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Fundamentals of data analysis and machine learning
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/1112/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/comm1112.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">COMM1112 Public Speaking</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Techniques for effective public communication
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/1131/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/comm1131.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">COMM1131 Sex, Relationships...</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Communication within the context of close relationships
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/3500/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/cs3500.jpg" width="100%" height={150} />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS3500 Object-Oriented Design</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Principles of modern software design
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+        </Row>
       </div>
     </div>
   );

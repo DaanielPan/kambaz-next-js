@@ -1,29 +1,24 @@
 import "./index.css";
 import Container from 'react-bootstrap/Container';
 import ForegroundColors from "./ForegroundColors";
-import BackgroundColors from "./BackgroundColors"; 
+import BackgroundColors from "./BackgroundColors";
 import Borders from "./Borders";
-import Padding from "./Padding"; 
-import Margins from "./Margins"; 
-import Corners from "./Corners"; 
+import Padding from "./Padding";
+import Margins from "./Margins";
+import Corners from "./Corners";
 import Dimensions from "./Dimensions";
-import Positions from "./Positions"; 
-import Zindex from "./Zindex"; 
-import Float from "./Float"; 
-import GridLayout from "./GridLayout"; 
-import Flex from "./Flex"; 
-import ReactIconsSampler from "./ReactIcons"; 
+import Positions from "./Positions";
+import Zindex from "./Zindex";
+import Float from "./Float";
+import GridLayout from "./GridLayout";
+import Flex from "./Flex";
+import ReactIconsSampler from "./ReactIcons";
 import BootstrapGrids from "./BootstrapGrids";
-import ScreenSizeLabel from "./ScreenSizeLabel"; 
+import ScreenSizeLabel from "./ScreenSizeLabel";
 import BootstrapTables from "./BootstrapTables";
 import BootstrapLists from "./BootstrapLists";
-import BootstrapForms from "./BootstrapForms"; 
-import BootstrapNavigation from "./BootstrapNavigation"; 
-
-
-
-
-
+import BootstrapForms from "./BootstrapForms";
+import BootstrapNavigation from "./BootstrapNavigation";
 
 export default function Lab2() {
   return (
@@ -32,7 +27,7 @@ export default function Lab2() {
       <h3>Styling with the STYLE attribute</h3>
       <p>
         Style attribute allows configuring look and feel
-        right on the element. Although it's very convenient
+        right on the element. Although it&apos;s very convenient
         it is considered bad practice and you should avoid
         using the style attribute
       </p>
@@ -44,7 +39,7 @@ export default function Lab2() {
           elements of the same name, e.g., P, we can refer to a specific element by its ID
         </p>
         <p id="wd-id-selector-2">
-          Here's another paragraph using a different ID and a different look and
+          Here&apos;s another paragraph using a different ID and a different look and
           feel
         </p>
       </div>
@@ -52,7 +47,7 @@ export default function Lab2() {
       <div id="wd-css-class-selectors">
         <h3>Class selectors</h3>
         <p className="wd-class-selector">
-          Instead of using IDs to refer to elements, you can use an element's CLASS attribute
+          Instead of using IDs to refer to elements, you can use an element&apos;s CLASS attribute
         </p>
         <h4 className="wd-class-selector">
           This heading has same style as paragraph above
@@ -66,7 +61,7 @@ export default function Lab2() {
             Selectors can be combined to refer elements in particular
             places in the document
             <p className="wd-selector-3">
-              This paragraph's red background is referenced as
+              This paragraph&apos;s red background is referenced as
               <br />
               .selector-2 .selector3<br />
               meaning the descendant of some ancestor.<br />
@@ -81,8 +76,8 @@ export default function Lab2() {
       </div>
 
       <ForegroundColors />
-      <BackgroundColors /> 
-      <Borders /> 
+      <BackgroundColors />
+      <Borders />
       <Padding />
       <Margins />
       <Corners />

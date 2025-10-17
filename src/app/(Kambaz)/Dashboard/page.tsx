@@ -1,12 +1,5 @@
 import Link from "next/link";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import CardImg from 'react-bootstrap/CardImg';
-import CardBody from 'react-bootstrap/CardBody';
-import CardTitle from 'react-bootstrap/CardTitle';
-import CardText from 'react-bootstrap/CardText';
+import { Row, Col, Card, Button } from "react-bootstrap";
 import * as db from "../Database";
 
 export default function Dashboard() {
@@ -14,118 +7,40 @@ export default function Dashboard() {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
+      <h2 id="wd-dashboard-published">
+        Published Courses ({courses.length})
+      </h2>{" "}
+      <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {courses.map((course) => (
-            <Col style={{ width: "300px" }}>
+            <Col key={course._id} style={{ width: "300px" }}>
               <Card>
-                <Link href={`/Courses/${course._id}/Home`} className="text-decoration-none text-dark">
-                  <CardImg variant="top" src="/images/reactjs.jpg" width="100%" height={150} />
-                  <CardBody>
-                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">  {course.name} </CardTitle>
-                  <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
-                    {course.description} 
-                    </CardText>
+                <Link
+                  href={`/Courses/${course._id}/Home`}
+                  className="text-decoration-none text-dark"
+                >
+                  <Card.Img
+                    variant="top"
+                    src={`/images/${course.image}`}
+                    height={150}
+                  />
+                  <Card.Body>
+                    <Card.Title className="text-nowrap overflow-hidden">
+                      {course.name}
+                    </Card.Title>
+                    <Card.Text
+                      className="overflow-hidden"
+                      style={{ height: "50px" }}
+                    >
+                      {course.description}
+                    </Card.Text>
                     <Button variant="primary">Go</Button>
-                  </CardBody>
+                  </Card.Body>
                 </Link>
               </Card>
             </Col>
-            ))}
-
-          {/* Repeat the same Card structure for your other courses... */}
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/3000/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/cs3000.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">CS3000 Algorithms</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Introduction to Data Structures and Algorithms
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/1365/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/math1365.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">MATH1365 Discrete Mathematics</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Mathematical concepts for computer science
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/3001/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/ds3000.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">DS3000 Introduction to Data Science</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Fundamentals of data analysis and machine learning
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/1112/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/comm1112.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">COMM1112 Public Speaking</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Techniques for effective public communication
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/1131/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/comm1131.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">COMM1131 Sex, Relationships...</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Communication within the context of close relationships
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
-          <Col style={{ width: "300px" }}>
-            <Card>
-              <Link href="/Courses/3500/Home" className="text-decoration-none text-dark">
-                <CardImg variant="top" src="/images/cs3500.jpg" width="100%" height={150} />
-                <CardBody>
-                  <CardTitle className="text-nowrap overflow-hidden">CS3500 Object-Oriented Design</CardTitle>
-                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
-                    Principles of modern software design
-                  </CardText>
-                  <Button variant="primary">Go</Button>
-                </CardBody>
-              </Link>
-            </Card>
-          </Col>
-
+          ))}
         </Row>
       </div>
     </div>

@@ -2,23 +2,22 @@ import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa";
 import { courses } from "../../Database";
-import Breadcrumb from "./Breadcrumb"; // 1. Import the new component
+import Breadcrumb from "./Breadcrumb";
 
 export default function CoursesLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { cid: string };
+  params: { cid: string }; // Correct type for params
 }) {
-  const { cid } = params;
+  const { cid } = params; // Get cid directly from params
   const course = courses.find((c) => c._id === cid);
 
   return (
     <div id="wd-courses">
       <h2 className="text-danger d-flex align-items-center">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {/* 2. Replace the old header with the Breadcrumb component */}
         <Breadcrumb course={course} />
       </h2>
       <hr />

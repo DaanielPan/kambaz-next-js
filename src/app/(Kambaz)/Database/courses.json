@@ -8,6 +8,7 @@
       "department": "D123",
       "credits": 4,
       "description": "This course provides an in-depth study of the fundamentals of rocket propulsion, covering topics such as propulsion theory, engine types, fuel chemistry, and the practical applications of rocket technology. Designed for students with a strong background in physics and engineering, the course includes both theoretical instruction and hands-on laboratory work"
+      
     },
     {
       "_id": "RS102",
@@ -81,4 +82,59 @@
       "description": "This course explores the complex relationships and diplomatic interactions among the different races of Middle-earth: Elves, Men, Dwarves, and Wizards. Topics include the study of historical alliances, conflicts, and the role of leadership and wisdom in maintaining peace. Students will engage in discussions and case studies on key events in Middle-earth's history, such as the Council of Elrond and the War of the Ring, to understand the principles of diplomacy and conflict resolution in a multi-species context.",
       "author": "654f9ec2ea7ead465908d1e3"
     }
+
+    {
+        "_id": "CH4550",
+        "name": "CH4550 Physical Chemistry",
+        "description": "Physical Chemistry merges the principles of physics and chemistry...",
+        "image": "reactjs.jpg"
+      },
+      {
+        "_id": "MD2010",
+        "name": "MD2010 Ancient Languages and Scripts",
+        "description": "This course offers an exploration of the ancient languages and scripts...",
+        "image": "reactjs.jpg"
+      },
+      {
+        "_id": "MD3020",
+        "name": "MD3020 Wizards, Elves, and Men",
+        "description": "This course explores the complex relationships and diplomatic interactions...",
+        "image": "reactjs.jpg"
+      },
+      {
+        "_id": "CS3000",
+        "name": "CS3000 Algorithms",
+        "description": "Introduction to Data Structures and Algorithms.",
+        "image": "cs3000.jpg"
+      },
+      {
+        "_id": "MATH1365",
+        "name": "MATH1365 Discrete Mathematics",
+        "description": "Mathematical concepts for computer science.",
+        "image": "math1365.jpg"
+      },
+      {
+        "_id": "DS3000",
+        "name": "DS3000 Introduction to Data Science",
+        "description": "Fundamentals of data analysis and machine learning.",
+        "image": "ds3000.jpg"
+      },
+      {
+        "_id": "COMM1112",
+        "name": "COMM1112 Public Speaking",
+        "description": "Techniques for effective public communication.",
+        "image": "comm1112.jpg"
+      },
+      {
+        "_id": "COMM1131",
+        "name": "COMM1131 Sex, Relationships...",
+        "description": "Communication within the context of close relationships.",
+        "image": "comm1131.jpg"
+      },
+      {
+        "_id": "CS3500",
+        "name": "CS3500 Object-Oriented Design",
+        "description": "Principles of modern software design.",
+        "image": "cs3500.jpg"
+      }
   ]

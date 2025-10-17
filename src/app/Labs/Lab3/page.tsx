@@ -85,12 +85,6 @@ export default function Lab3() {
       </Highlight>
       <hr />
 
-      <PathParameters />
-      <h4>Rendering a Data Structure</h4>
-      <ListGroup>
-        <TodoItem />
-      </ListGroup>
-
       <TodoList />
       
     </div>

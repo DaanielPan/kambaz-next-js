@@ -1,5 +1,5 @@
 import TodoItem from "./TodoItemTemp";
-import todos from "./todos.json"; // Import the data
+import todos from "./todos.json";
 import { ListGroup } from "react-bootstrap";
 
 const TodoList = () => {
@@ -8,7 +8,7 @@ const TodoList = () => {
       <h3>Todo List</h3>
       <ListGroup>
         {todos.map((todo) => (
-          // Use the todo's title as the unique key for this lab
+          // Here, we pass the 'todo' object as a prop
           <TodoItem key={todo.title} todo={todo} />
         ))}
       </ListGroup>

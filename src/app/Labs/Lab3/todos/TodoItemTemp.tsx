@@ -1,6 +1,6 @@
 import { ListGroup } from "react-bootstrap";
 
-// Define the structure of a single todo object for TypeScript
+// Define the structure of a single todo object
 type TodoType = {
   done: boolean;
   title: string;

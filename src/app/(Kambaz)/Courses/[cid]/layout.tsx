@@ -4,14 +4,13 @@ import { FaAlignJustify } from "react-icons/fa";
 import { courses } from "../../Database";
 import Breadcrumb from "./Breadcrumb";
 
-export default function CoursesLayout({
-  children,
-  params,
-}: {
+interface CoursesLayoutProps {
   children: ReactNode;
-  params: { cid: string }; // Correct type for params
-}) {
-  const { cid } = params; // Get cid directly from params
+  params: { cid: string };
+}
+
+export default function CoursesLayout({ children, params }: CoursesLayoutProps) {
+  const { cid } = params;
   const course = courses.find((c) => c._id === cid);
 
   return (

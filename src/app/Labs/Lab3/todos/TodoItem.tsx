@@ -1,13 +1,13 @@
+"use client";
+
 import { ListGroup } from "react-bootstrap";
 
-// Define the structure of a single todo object
-type TodoType = {
+export type TodoType = {
   done: boolean;
   title: string;
   status: string;
 };
 
-// This component now receives one 'todo' object as a prop
 const TodoItem = ({ todo }: { todo: TodoType }) => {
   return (
     <ListGroup.Item>
@@ -16,4 +16,5 @@ const TodoItem = ({ todo }: { todo: TodoType }) => {
     </ListGroup.Item>
   );
 };
+
 export default TodoItem;

@@ -1,14 +1,15 @@
-import TodoItem from "./TodoItemTemp";
-import todos from "./todos.json";
+"use client";
+
 import { ListGroup } from "react-bootstrap";
+import TodoItem, { TodoType } from "./TodoItem";
+import todos from "./todos.json";
 
 const TodoList = () => {
   return (
     <div id="wd-todo-list">
       <h3>Todo List</h3>
       <ListGroup>
-        {todos.map((todo) => (
-          // Here, we pass the 'todo' object as a prop
+        {todos.map((todo: TodoType) => (
           <TodoItem key={todo.title} todo={todo} />
         ))}
       </ListGroup>
@@ -16,4 +17,5 @@ const TodoList = () => {
     </div>
   );
 };
+
 export default TodoList;

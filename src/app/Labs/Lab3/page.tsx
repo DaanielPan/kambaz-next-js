@@ -19,7 +19,7 @@ import FindIndex from "./FindIndex";
 import FilterFunction from "./FilterFunction";
 import JsonStringify from "./JsonStringify";
 import House from "./House";
-import Spreading from "./Spreader";
+import Spreader from "./Spreader";
 import Destructing from "./Destructing";
 import FunctionDestructing from "./FunctionDestructing";
 import DestructingImports from "./DestructingImports";
@@ -29,7 +29,7 @@ import Add from "./Add";
 import Square from "./Square";
 import Highlight from "./Highlight";
 import PathParameters from "./PathParameters";
-import TodoItem from './todos/TodoItemTemp';
+import TodoItem from './todos/TodoItem';
 import { ListGroup } from "react-bootstrap";
 import TodoList from "./todos/TodoList";
 
@@ -59,7 +59,7 @@ export default function Lab3() {
       <FilterFunction />
       <JsonStringify />
       <House />
-      <Spreading />
+      <Spreader />
       <Destructing />
       <FunctionDestructing />
       <DestructingImports />
@@ -71,8 +71,8 @@ export default function Lab3() {
       <Square>4</Square>
       <hr />
       <Highlight>
-      This text is highlighted because it&apos;s passed as children to the
-      Highlight component.
+        This text is highlighted because it&apos;s passed as children to the
+        Highlight component.
       </Highlight>
       <hr />
 
@@ -88,7 +88,7 @@ export default function Lab3() {
       <PathParameters />
 
       <TodoList />
-      
+
     </div>
   );
 }

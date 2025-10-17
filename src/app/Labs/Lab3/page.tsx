@@ -85,6 +85,8 @@ export default function Lab3() {
       </Highlight>
       <hr />
 
+      <PathParameters />
+
       <TodoList />
       
     </div>

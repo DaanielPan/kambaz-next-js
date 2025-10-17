@@ -3,8 +3,15 @@ import Link from "next/link";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import * as db from "../Database";
 
+interface Course {
+  _id: string;
+  name: string;
+  description: string;
+  image?: string;
+}
+
 export default function Dashboard() {
-  const courses = db.courses;
+  const courses: Course[] = db.courses;
 
   return (
     <div id="wd-dashboard">
@@ -17,7 +24,7 @@ export default function Dashboard() {
 
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses.map((course: any) => (
+          {courses.map((course) => (
             <Col key={course._id} style={{ width: "300px" }}>
               <Link
                 href={`/Courses/${course._id}/Home`}

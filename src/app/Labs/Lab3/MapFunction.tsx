@@ -1,5 +1,5 @@
 export default function MapFunction() {
-    let numberArray1 = [1, 2, 3, 4, 5, 6];
+    const numberArray1 = [1, 2, 3, 4, 5, 6];
     const square = (a: number) => a * a;
     const todos = ["Buy milk", "Feed the pets"];
     const squares = numberArray1.map(square);
@@ -12,7 +12,8 @@ export default function MapFunction() {
         Todos:
         <ol>
           {todos.map((todo) => (
-            <li>{todo}</li>
+            // Add the key prop using the todo string itself
+            <li key={todo}>{todo}</li>
           ))}
         </ol>{" "}
         <hr />

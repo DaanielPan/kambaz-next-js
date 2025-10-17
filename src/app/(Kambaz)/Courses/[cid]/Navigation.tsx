@@ -1,48 +1,38 @@
+"use client";
+import { usePathname } from "next/navigation";
+import { ListGroup } from "react-bootstrap";
 import Link from "next/link";
 
-export default function CourseNavigation() {
+export default function CourseNavigation({ cid }: { cid: string }) {
+  const pathname = usePathname();
+
+  // The data array for the links
+  const links = [
+    "Home",
+    "Modules",
+    "Piazza",
+    "Zoom",
+    "Assignments",
+    "Quizzes",
+    "Grades",
+    "People",
+  ];
+
   return (
-    <div id="wd-courses-navigation" className="list-group fs-5 rounded-0">
-      <div className="list-group-item active border-0">
-        <Link href="/Courses/1234/Home" id="wd-course-home-link">
-          Home
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Modules" id="wd-course-modules-link">
-          Modules
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Piazza" id="wd-course-piazza-link">
-          Piazza
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Zoom" id="wd-course-zoom-link">
-          Zoom
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Assignments" id="wd-course-assignments-link">
-          Assignments
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Quizzes" id="wd-course-quizzes-link">
-          Quizzes
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/Grades" id="wd-course-grades-link">
-          Grades
-        </Link>
-      </div>
-      <div className="list-group-item text-danger border-0">
-        <Link href="/Courses/1234/People/Table" id="wd-course-people-link">
-          People
-        </Link>
-      </div>
-    </div>
+    <ListGroup style={{ width: 200 }} className="rounded-0" id="wd-courses-navigation">
+      {/* Map over the array to create links dynamically */}
+      {links.map((link) => (
+        <ListGroup.Item
+          key={link}
+          as={Link}
+          // Construct the URL dynamically using the course ID
+          href={`/Courses/${cid}/${link}`}
+          // Highlight the active link based on the current URL
+          className={pathname.includes(link) ? "active" : ""}
+        >
+          {link}
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
   );
 }

@@ -1,29 +1,64 @@
-import Nav from "react-bootstrap/Nav";
-import NavItem from "react-bootstrap/NavItem";
-import NavLink from "react-bootstrap/NavLink";
+"use client";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Nav } from "react-bootstrap";
 
 export default function TOC() {
+  const pathname = usePathname();
   return (
-    <Nav variant="pills">
-      <NavItem>
-        <NavLink href="/Labs" as={Link}>Home</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="/Labs/Lab1" as={Link}>Lab 1</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="/Labs/Lab2" as={Link}>Lab 2</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="/Labs/Lab3" as={Link}>Lab 3</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="/" as={Link}>Kambaz</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="https://github.com/DaanielPan">My GitHub</NavLink>
-      </NavItem>
+    <Nav variant="pills" className="mb-3">
+      <Nav.Item>
+        <Link
+          href="/Labs"
+          className={`nav-link ${pathname.endsWith("/Labs") ? "active" : ""}`}
+        >
+          Labs
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link
+          href="/Labs/Lab1"
+          className={`nav-link ${
+            pathname.endsWith("/Lab1") ? "active" : ""
+          }`}
+        >
+          Lab 1
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link
+          href="/Labs/Lab2"
+          className={`nav-link ${
+            pathname.endsWith("/Lab2") ? "active" : ""
+          }`}
+        >
+          Lab 2
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link
+          href="/Labs/Lab3"
+          className={`nav-link ${
+            pathname.endsWith("/Lab3") ? "active" : ""
+          }`}
+        >
+          Lab 3
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link href="/" className="nav-link">
+        Kambaz
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link
+          href="https://github.com/DaanielPan"
+          target="_blank"
+          className="nav-link"
+        >
+          My GitHub
+        </Link>
+      </Nav.Item>
     </Nav>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import * as db from "../../../../Database";
+import * as db from "../../../Database"; // Path is now one level shorter
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -17,7 +17,7 @@ type Enrollment = {
   course: string;
 };
 
-export default function PeopleTable() {
+export default function People() {
   const { cid } = useParams();
   const { users, enrollments } = db;
 

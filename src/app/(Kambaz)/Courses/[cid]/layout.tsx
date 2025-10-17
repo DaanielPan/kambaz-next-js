@@ -6,11 +6,11 @@ import Breadcrumb from "./Breadcrumb";
 
 interface CoursesLayoutProps {
   children: ReactNode;
-  params: { cid: string };
+  params: Promise<{ cid: string }>;
 }
 
-export default function CoursesLayout({ children, params }: CoursesLayoutProps) {
-  const { cid } = params;
+export default async function CoursesLayout({ children, params }: CoursesLayoutProps) {
+  const { cid } = await params; // ✅ Await params to extract cid properly
   const course = courses.find((c) => c._id === cid);
 
   return (

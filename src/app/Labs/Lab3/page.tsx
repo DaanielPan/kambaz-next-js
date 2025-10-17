@@ -71,8 +71,8 @@ export default function Lab3() {
       <Square>4</Square>
       <hr />
       <Highlight>
-        This text is highlighted because it's passed as children to the
-        Highlight component.
+      This text is highlighted because it&apos;s passed as children to the
+      Highlight component.
       </Highlight>
       <hr />
 

@@ -1,4 +1,4 @@
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup,  } from "react-bootstrap";
 
 const TodoItem = ({ todo = { done: true, title: 'Buy milk', status: 'COMPLETED' } }) => {
   return (

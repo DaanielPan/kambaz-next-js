@@ -1,10 +1,11 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import HelloRedux from "./HelloRedux";
 import CounterRedux from "./CounterRedux";
 import AddRedux from "./AddRedux";
 import TodoList from "./todos/TodoList";
-
 
 export default function ReduxExamples() {
   return (

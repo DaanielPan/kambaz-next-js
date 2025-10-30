@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";import { useState } from "react";
 export default function Counter() {
   const [count, setCount] = useState(7);
   console.log(count);

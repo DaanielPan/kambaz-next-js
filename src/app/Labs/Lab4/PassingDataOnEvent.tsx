@@ -1,5 +1,6 @@
-"use client"
-const add = (a: number, b: number) => {
+"use client";
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";const add = (a: number, b: number) => {
   alert(`${a} + ${b} = ${a + b}`);
 };
 export default function PassingDataOnEvent() {

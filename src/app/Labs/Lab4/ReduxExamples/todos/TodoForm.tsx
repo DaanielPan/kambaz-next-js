@@ -1,11 +1,16 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { Button, FormControl, ListGroupItem } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, updateTodo, setTodo } from "./todosReducer";
 
 export default function TodoForm() {
-  const { todo } = useSelector((state: any) => state.todosReducer);
+  const todo = useSelector(
+    (state: any) => state?.todosReducer?.todo ?? { id: "", title: "" }
+  );
+
   const dispatch = useDispatch();
 
   return (
@@ -23,7 +28,7 @@ export default function TodoForm() {
         Update
       </Button>
       <FormControl
-        defaultValue={todo.title}
+        value={todo.title}
         onChange={(e) =>
           dispatch(setTodo({ ...todo, title: e.target.value }))
         }

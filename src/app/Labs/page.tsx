@@ -26,7 +26,7 @@ export default function Labs() {
         </li>
         <li>
           <Link href="/Labs/Lab4" id="wd-lab3-link">
-            Lab 4:
+            Lab 4: Redux
           </Link>
         </li>
       </ul>

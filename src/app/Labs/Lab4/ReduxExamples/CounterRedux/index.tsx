@@ -1,5 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "./counterReducer";
 export default function CounterRedux() {

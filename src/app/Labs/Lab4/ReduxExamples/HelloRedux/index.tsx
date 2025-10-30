@@ -1,4 +1,5 @@
 "use client";
+export const fetchCache = "force-no-store";
 export const dynamic = "force-dynamic";
 import { useSelector, useDispatch } from "react-redux";
 export default function HelloRedux() {

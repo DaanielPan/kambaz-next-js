@@ -2,6 +2,8 @@
 
 export const dynamic = "force-dynamic";
 
+export const fetchCache = "force-no-store";
+
 import HelloRedux from "./HelloRedux";
 import CounterRedux from "./CounterRedux";
 import AddRedux from "./AddRedux";

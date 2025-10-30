@@ -1,12 +1,14 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
+
 import { Provider } from "react-redux";
 import { store } from "./store";
 import React from "react";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-export const revalidate = 0;
+
 
 export default function Lab4Layout({
   children,

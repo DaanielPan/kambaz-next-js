@@ -1,28 +1,26 @@
+"use client";
+
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa";
-import { courses } from "../../Database";
-import Breadcrumb from "./Breadcrumb";
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
 
-interface CoursesLayoutProps {
-  children: ReactNode;
-  params: Promise<{ cid: string }>;
-}
-
-export default async function CoursesLayout({ children, params }: CoursesLayoutProps) {
-  const { cid } = await params; // ✅ Await params to extract cid properly
-  const course = courses.find((c) => c._id === cid);
+export default function CoursesLayout({ children }: { children: ReactNode }) {
+  const { cid } = useParams();
+  const courses = useSelector((state: any) => state.coursesReducer.courses);
+  const course = courses.find((c: any) => c._id === cid);
 
   return (
     <div id="wd-courses">
-      <h2 className="text-danger d-flex align-items-center">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />
-        <Breadcrumb course={course} />
+      <h2 className="d-flex align-items-center text-success">
+        <FaAlignJustify className="me-4 fs-4 mb-1 text-success" />
+        {course?.name}
       </h2>
-      <hr />
+      <hr className="border-success" />
       <div className="d-flex">
-        <div className="d-none d-md-block">
-          <CourseNavigation cid={cid} />
+        <div>
+          <CourseNavigation />
         </div>
         <div className="flex-fill">{children}</div>
       </div>

@@ -1,10 +1,10 @@
 [
-    { "_id": "123", "firstName": "Alice", "lastName": "Wonderland", "role": "STUDENT" },
-    { "_id": "234", "firstName": "Bob", "lastName": "Builder", "role": "STUDENT" },
-    { "_id": "345", "firstName": "Charlie", "lastName": "Chaplin", "role": "STUDENT" },
-    { "_id": "456", "firstName": "Diana", "lastName": "Prince", "role": "FACULTY" },
-    { "_id": "567", "firstName": "Edward", "lastName": "Scissorhands", "role": "STUDENT" },
-    { "_id": "6",   "firstName": "Frank", "lastName": "Herbert", "role": "STUDENT" },
-    { "_id": "789", "firstName": "Grace", "lastName": "Hopper", "role": "TA" },
-    { "_id": "890", "firstName": "Harry", "lastName": "Potter", "role": "STUDENT" }
-  ]
+  { "_id": "123", "username": "alice", "password": "123", "firstName": "Alice", "lastName": "Wonderland", "role": "STUDENT" },
+  { "_id": "234", "username": "bob", "password": "123", "firstName": "Bob", "lastName": "Builder", "role": "STUDENT" },
+  { "_id": "345", "username": "charlie", "password": "123", "firstName": "Charlie", "lastName": "Chaplin", "role": "STUDENT" },
+  { "_id": "456", "username": "diana", "password": "123", "firstName": "Diana", "lastName": "Prince", "role": "FACULTY" },
+  { "_id": "567", "username": "edward", "password": "123", "firstName": "Edward", "lastName": "Scissorhands", "role": "STUDENT" },
+  { "_id": "6",   "username": "frank", "password": "123", "firstName": "Frank", "lastName": "Herbert", "role": "STUDENT" },
+  { "_id": "789", "username": "grace", "password": "123", "firstName": "Grace", "lastName": "Hopper", "role": "TA" },
+  { "_id": "890", "username": "harry", "password": "123", "firstName": "Harry", "lastName": "Potter", "role": "STUDENT" }
+]

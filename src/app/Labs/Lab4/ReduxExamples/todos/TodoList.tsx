@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import TodoForm from "./TodoForm";
@@ -6,7 +8,7 @@ import TodoItem from "./TodoItem";
 import { useSelector } from "react-redux";
 
 export default function TodoList() {
-  const { todos } = useSelector((state: any) => state.todosReducer);
+  const todos = useSelector((state: any) => state?.todosReducer?.todos ?? []);
 
   return (
     <div id="wd-todo-list-redux">

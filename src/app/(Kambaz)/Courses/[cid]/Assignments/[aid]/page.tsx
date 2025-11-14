@@ -30,7 +30,6 @@ export default function AssignmentEditor() {
     }
   );
 
-  // ⭐ If user reloads page, fetch from server
   const fetchAssignments = async () => {
     const data = await client.findAssignmentsForModule(cid as string);
     dispatch(setAssignments(data));
@@ -45,7 +44,6 @@ export default function AssignmentEditor() {
     fetchAssignments();
   }, []);
 
-  // ⭐ Save to server
 const handleSave = async () => {
   // declare updated BEFORE using it
   let updated: any;

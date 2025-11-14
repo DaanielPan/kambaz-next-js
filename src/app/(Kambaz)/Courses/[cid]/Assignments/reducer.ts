@@ -6,6 +6,12 @@ const initialState = {
 
 export default function assignmentsReducer(state = initialState, action: any) {
   switch (action.type) {
+    case "setAssignments":                       
+      return {
+        ...state,
+        assignments: action.assignments,
+      };
+
     case "addAssignment":
       return {
         ...state,
@@ -43,4 +49,9 @@ export const deleteAssignment = (assignmentId: string) => ({
 export const updateAssignment = (assignment: any) => ({
   type: "updateAssignment",
   assignment,
+});
+
+export const setAssignments = (assignments: any[]) => ({
+  type: "setAssignments",
+  assignments,
 });

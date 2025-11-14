@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter, useParams } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
-import { addAssignment, updateAssignment } from "../reducer";
 import { Button, FormControl } from "react-bootstrap";
+
+import * as client from "../client";
+import { setAssignments } from "../reducer";
 
 export default function AssignmentEditor() {
   const dispatch = useDispatch();
@@ -14,13 +16,13 @@ export default function AssignmentEditor() {
   const assignments = useSelector(
     (state: any) => state.assignmentsReducer.assignments
   );
-  const existingAssignment = assignments.find((a: any) => a._id === aid);
+
+  const existing = assignments.find((a: any) => a._id === aid);
 
   const [assignment, setAssignment] = useState<any>(
-    existingAssignment || {
-      _id: uuidv4(),
+    existing || {
       name: "New Assignment",
-      description: "New Assignment Description",
+      description: "",
       points: 100,
       dueDate: "",
       availableFrom: "",
@@ -28,11 +30,44 @@ export default function AssignmentEditor() {
     }
   );
 
-  const handleSave = () => {
-    if (existingAssignment) dispatch(updateAssignment(assignment));
-    else dispatch(addAssignment(assignment));
-    router.push(`/Courses/${cid}/Assignments`);
+  // ⭐ If user reloads page, fetch from server
+  const fetchAssignments = async () => {
+    const data = await client.findAssignmentsForModule(cid as string);
+    dispatch(setAssignments(data));
+
+    if (aid !== "new") {
+      const found = data.find((a: any) => a._id === aid);
+      if (found) setAssignment(found);
+    }
   };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  // ⭐ Save to server
+const handleSave = async () => {
+  // declare updated BEFORE using it
+  let updated: any;
+
+  if (aid === "new") {
+    // CREATE
+    updated = await client.createAssignment(cid as string, assignment);
+    dispatch(setAssignments([...assignments, updated]));
+  } else {
+    // UPDATE
+    updated = await client.updateAssignment(assignment);
+
+    const newList = assignments.map((a: any) =>
+      a._id === updated._id ? updated : a
+    );
+
+    dispatch(setAssignments(newList));
+  }
+
+  router.push(`/Courses/${cid}/Assignments`);
+};
+
 
   const handleCancel = () => {
     router.push(`/Courses/${cid}/Assignments`);
@@ -40,12 +75,12 @@ export default function AssignmentEditor() {
 
   return (
     <div id="wd-assignment-editor" style={{ maxWidth: "600px" }}>
-      <h2>{existingAssignment ? "Edit Assignment" : "New Assignment"}</h2>
+      <h2>{aid === "new" ? "New Assignment" : "Edit Assignment"}</h2>
 
       <FormControl
         className="mb-2"
         placeholder="Assignment Name"
-        defaultValue={assignment.name}
+        value={assignment.name}
         onChange={(e) => setAssignment({ ...assignment, name: e.target.value })}
       />
 
@@ -53,7 +88,7 @@ export default function AssignmentEditor() {
         className="mb-2"
         as="textarea"
         placeholder="Description"
-        defaultValue={assignment.description}
+        value={assignment.description}
         onChange={(e) =>
           setAssignment({ ...assignment, description: e.target.value })
         }
@@ -63,7 +98,7 @@ export default function AssignmentEditor() {
         className="mb-2"
         type="number"
         placeholder="Points"
-        defaultValue={assignment.points}
+        value={assignment.points}
         onChange={(e) =>
           setAssignment({ ...assignment, points: parseInt(e.target.value) })
         }
@@ -73,7 +108,7 @@ export default function AssignmentEditor() {
         className="mb-2"
         type="date"
         placeholder="Due Date"
-        defaultValue={assignment.dueDate}
+        value={assignment.dueDate}
         onChange={(e) =>
           setAssignment({ ...assignment, dueDate: e.target.value })
         }
@@ -83,7 +118,7 @@ export default function AssignmentEditor() {
         className="mb-2"
         type="date"
         placeholder="Available From"
-        defaultValue={assignment.availableFrom}
+        value={assignment.availableFrom}
         onChange={(e) =>
           setAssignment({ ...assignment, availableFrom: e.target.value })
         }
@@ -93,7 +128,7 @@ export default function AssignmentEditor() {
         className="mb-2"
         type="date"
         placeholder="Available Until"
-        defaultValue={assignment.availableUntil}
+        value={assignment.availableUntil}
         onChange={(e) =>
           setAssignment({ ...assignment, availableUntil: e.target.value })
         }

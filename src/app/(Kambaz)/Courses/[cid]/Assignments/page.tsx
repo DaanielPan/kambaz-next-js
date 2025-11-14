@@ -1,61 +1,68 @@
 "use client";
-import Link from "next/link";
+
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { useRouter, useParams } from "next/navigation";
+import * as client from "./client";
+import { setAssignments } from "./reducer";
+import { deleteAssignment as deleteLocal } from "./reducer";
 import { Button, Row, Col, Card } from "react-bootstrap";
-import { useRouter } from "next/navigation";
 
 export default function Assignments() {
-  const dispatch = useDispatch();
+  const { cid } = useParams();
   const router = useRouter();
-  const assignments = useSelector(
-    (state: any) => state.assignmentsReducer.assignments
-  );
+  const dispatch = useDispatch();
+  const assignments = useSelector((state: any) => state.assignments.assignments);
 
-  const handleDelete = (assignmentId: string) => {
-    if (window.confirm("Are you sure you want to delete this assignment?")) {
-      dispatch(deleteAssignment(assignmentId));
-    }
+  const loadAssignments = async () => {
+    const data = await client.findAssignmentsForModule(cid as string);
+    dispatch(setAssignments(data));
+  };
+
+  useEffect(() => {
+    loadAssignments();
+  }, []);
+
+  const removeAssignment = async (id: string) => {
+    await client.deleteAssignment(id);
+    dispatch(setAssignments(assignments.filter((a: any) => a._id !== id)));
   };
 
   return (
     <div id="wd-assignments">
       <h1>Assignments</h1>
-      <div className="d-flex justify-content-end mb-3">
-        <Button
-          variant="success"
-          onClick={() => router.push(`/Courses/${"1"}/Assignments/new`)}
-        >
-          + Assignment
-        </Button>
-      </div>
 
-      <Row xs={1} md={3} className="g-4">
-        {assignments.map((assignment: any) => (
-          <Col key={assignment._id}>
+      <Button
+        variant="success"
+        className="mb-3 float-end"
+        onClick={() => router.push(`/Courses/${cid}/Assignments/new`)}
+      >
+        + Assignment
+      </Button>
+
+      <Row xs={1} md={3}>
+        {assignments.map((a: any) => (
+          <Col key={a._id}>
             <Card>
               <Card.Body>
-                <Card.Title>{assignment.name}</Card.Title>
-                <Card.Text>{assignment.description}</Card.Text>
-                <Card.Text>
-                  <strong>Due:</strong> {assignment.dueDate}
-                </Card.Text>
-                <div className="d-flex justify-content-between">
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      router.push(`/Courses/${"1"}/Assignments/${assignment._id}`)
-                    }
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDelete(assignment._id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
+                <Card.Title>{a.name}</Card.Title>
+                <Card.Text>{a.description}</Card.Text>
+
+                <Button
+                  variant="primary"
+                  onClick={() =>
+                    router.push(`/Courses/${cid}/Assignments/${a._id}`)
+                  }
+                >
+                  Edit
+                </Button>
+
+                <Button
+                  variant="danger"
+                  onClick={() => removeAssignment(a._id)}
+                >
+                  Delete
+                </Button>
               </Card.Body>
             </Card>
           </Col>

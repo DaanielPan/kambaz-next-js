@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 
 export default function ArrayStateVariable() {
-  const todos = useSelector((state: any) => state?.todosReducer?.todos ?? []);
+const todos = useSelector((state: any) => state?.todosReducer?.todos ?? []);
   const [array, setArray] = useState([1, 2, 3, 4, 5]);
   const addElement = () => {
     setArray([...array, Math.floor(Math.random() * 100)]);

@@ -12,7 +12,7 @@ import {
 export default function EnrollmentsPage() {
   const dispatch = useDispatch();
   const { cid } = useParams();
-  const userId = "1"; // hardcoded until auth implemented
+  const userId = "1"; 
 
   const enrollments = useSelector((state: any) => state.enrollments.enrollments);
 

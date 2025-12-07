@@ -94,9 +94,11 @@ export default function Assignments() {
             <Col key={a._id}>
               <Card>
                 <Card.Body>
-                  <Card.Title>{a.name || a.title}</Card.Title>
+                  <Card.Title>{a.name || a.title || "Untitled Assignment"}</Card.Title>
                   <Card.Text>{a.description || "No description"}</Card.Text>
                   {a.points && <Card.Text><small>Points: {a.points}</small></Card.Text>}
+                  {a.due && <Card.Text><small>Due: {a.due}</small></Card.Text>}
+                  {a.dueDate && <Card.Text><small>Due Date: {a.dueDate}</small></Card.Text>}
 
                   <Button
                     variant="primary"

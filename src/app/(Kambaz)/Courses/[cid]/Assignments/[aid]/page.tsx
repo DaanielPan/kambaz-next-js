@@ -43,7 +43,13 @@ export default function AssignmentEditor() {
         if (aid !== "new") {
           const found = data.find((a: any) => a._id === aid);
           if (found) {
-            setAssignment(found);
+            // Normalize assignment data - handle both 'name' and 'title' fields
+            const normalized = {
+              ...found,
+              name: found.name || found.title || "Untitled Assignment",
+              title: found.title || found.name || "Untitled Assignment",
+            };
+            setAssignment(normalized);
           } else {
             console.error("Assignment not found:", aid);
             router.push(`/Courses/${cid}/Assignments`);
@@ -115,8 +121,8 @@ export default function AssignmentEditor() {
       <FormControl
         className="mb-2"
         placeholder="Assignment Name"
-        value={assignment.name}
-        onChange={(e) => setAssignment({ ...assignment, name: e.target.value })}
+        value={assignment.name || assignment.title || ""}
+        onChange={(e) => setAssignment({ ...assignment, name: e.target.value, title: e.target.value })}
       />
 
       <FormControl

@@ -13,6 +13,12 @@ export default function Dashboard() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const coursesState = useSelector((state: any) => state.coursesReducer);
   const courses = Array.isArray(coursesState?.courses) ? coursesState.courses : [];
+  
+  // Debug logging
+  useEffect(() => {
+    console.log("Dashboard - Current courses:", courses.length, courses);
+    console.log("Dashboard - Current user:", currentUser);
+  }, [courses, currentUser]);
 
   const [course, setCourse] = useState<any>({
     name: "",
@@ -24,17 +30,32 @@ export default function Dashboard() {
   const fetchCourses = async () => {
     try {
       const c = await client.findMyCourses();
+      console.log("Fetched courses data:", c);
+      // Handle different response structures
+      let coursesArray = c;
+      if (c && typeof c === 'object' && !Array.isArray(c)) {
+        // If response is wrapped in an object, try common property names
+        coursesArray = c.courses || c.data || c.items || [];
+      }
       // Ensure we always set an array
-      if (Array.isArray(c)) {
-        dispatch(setCourses(c));
+      if (Array.isArray(coursesArray) && coursesArray.length > 0) {
+        console.log("Setting courses:", coursesArray.length, "courses");
+        dispatch(setCourses(coursesArray));
+      } else if (Array.isArray(coursesArray)) {
+        // Empty array from API - only update if we don't have existing courses
+        console.log("API returned empty array");
+        // Keep existing courses if we have them, otherwise set empty
+        if (courses.length === 0) {
+          dispatch(setCourses([]));
+        }
       } else {
         console.error("API returned non-array data:", c);
-        dispatch(setCourses([]));
+        // Don't overwrite existing courses if API returns invalid data
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching courses:", error);
-      // Set empty array on error to prevent .map() errors
-      dispatch(setCourses([]));
+      // Don't overwrite existing courses if API fails - preserve what we have
+      // The initial state from Database will remain
     }
   };
 
@@ -76,7 +97,13 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchCourses();
+    // Only fetch if we don't have courses yet, or if currentUser changes
+    if (currentUser) {
+      fetchCourses();
+    } else if (courses.length === 0) {
+      // If no user and no courses, try fetching anyway (might be public data)
+      fetchCourses();
+    }
   }, [currentUser]);
 
   return (

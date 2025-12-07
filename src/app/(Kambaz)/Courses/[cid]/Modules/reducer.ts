@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  modules: [],          // ⭐ GREEN: start empty (server will populate)
+  modules: [] as any[],          // ⭐ GREEN: start empty (server will populate)
 };
 
 const modulesSlice = createSlice({

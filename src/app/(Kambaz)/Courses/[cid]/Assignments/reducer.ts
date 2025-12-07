@@ -9,7 +9,8 @@ export default function assignmentsReducer(state = initialState, action: any) {
     case "setAssignments":                       
       return {
         ...state,
-        assignments: action.assignments,
+        // Ensure assignments is always an array
+        assignments: Array.isArray(action.assignments) ? action.assignments : [],
       };
 
     case "addAssignment":

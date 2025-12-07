@@ -12,11 +12,24 @@ export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const assignments = useSelector((state: any) => state.assignments.assignments);
+  const assignmentsState = useSelector((state: any) => state.assignments);
+  const assignments = Array.isArray(assignmentsState?.assignments) ? assignmentsState.assignments : [];
 
   const loadAssignments = async () => {
-    const data = await client.findAssignmentsForModule(cid as string);
-    dispatch(setAssignments(data));
+    try {
+      const data = await client.findAssignmentsForModule(cid as string);
+      // Ensure we always set an array
+      if (Array.isArray(data)) {
+        dispatch(setAssignments(data));
+      } else {
+        console.error("API returned non-array data:", data);
+        dispatch(setAssignments([]));
+      }
+    } catch (error) {
+      console.error("Error fetching assignments:", error);
+      // Set empty array on error to prevent .map() errors
+      dispatch(setAssignments([]));
+    }
   };
 
   useEffect(() => {
@@ -24,8 +37,12 @@ export default function Assignments() {
   }, []);
 
   const removeAssignment = async (id: string) => {
-    await client.deleteAssignment(id);
-    dispatch(setAssignments(assignments.filter((a: any) => a._id !== id)));
+    try {
+      await client.deleteAssignment(id);
+      dispatch(setAssignments(assignments.filter((a: any) => a._id !== id)));
+    } catch (error) {
+      console.error("Error deleting assignment:", error);
+    }
   };
 
   return (

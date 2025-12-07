@@ -15,6 +15,8 @@ type User = {
 export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showUserId, setShowUserId] = useState<string | null>(null);
+  // Ensure users is always an array
+  const safeUsers = Array.isArray(users) ? users : [];
   return (
     <div id="wd-people-table">
       <Table striped>
@@ -25,7 +27,7 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[];
           </tr>
         </thead>
         <tbody>
-          {users.map((user: User) => (
+          {safeUsers.map((user: User) => (
             <tr key={user._id}>
               <td className="text-nowrap">
                 <FaUserCircle className="me-2 fs-1 text-secondary" />

@@ -11,7 +11,8 @@ const modulesSlice = createSlice({
   reducers: {
     // ⭐ GREEN — replace modules with server data
     setModules: (state, action) => {
-      state.modules = action.payload;
+      // Ensure payload is always an array
+      state.modules = Array.isArray(action.payload) ? action.payload : [];
     },
 
     addModule: (state, { payload: module }) => {

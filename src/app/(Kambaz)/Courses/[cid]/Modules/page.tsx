@@ -24,14 +24,27 @@ export default function Modules() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
 
-  const modules = useSelector((state: any) => state.modulesReducer.modules);
+  const modulesState = useSelector((state: any) => state.modulesReducer);
+  const modules = Array.isArray(modulesState?.modules) ? modulesState.modules : [];
   const dispatch = useDispatch();
 
   // FETCH MODULES FROM SERVER
   const fetchModules = async () => {
     if (!cid) return;
-    const modules = await client.findModulesForCourse(cid as string);
-    dispatch(setModules(modules));
+    try {
+      const modulesData = await client.findModulesForCourse(cid as string);
+      // Ensure we always set an array
+      if (Array.isArray(modulesData)) {
+        dispatch(setModules(modulesData));
+      } else {
+        console.error("API returned non-array data:", modulesData);
+        dispatch(setModules([]));
+      }
+    } catch (error) {
+      console.error("Error fetching modules:", error);
+      // Set empty array on error to prevent .map() errors
+      dispatch(setModules([]));
+    }
   };
 
   useEffect(() => {
@@ -41,29 +54,37 @@ export default function Modules() {
   // CREATE A MODULE FOR THIS COURSE
   const onCreateModuleForCourse = async () => {
     if (!cid) return;
-
-    const newModule = { name: moduleName, course: cid };
-    const module = await client.createModuleForCourse(cid as string, newModule);
-
-    dispatch(setModules([...modules, module]));
-    setModuleName("");
+    try {
+      const newModule = { name: moduleName, course: cid };
+      const module = await client.createModuleForCourse(cid as string, newModule);
+      dispatch(setModules([...modules, module]));
+      setModuleName("");
+    } catch (error) {
+      console.error("Error creating module:", error);
+    }
   };
 
   // DELETE MODULE — server + state
   const onRemoveModule = async (moduleId: string) => {
-    await client.deleteModule(moduleId);
-    dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+    try {
+      await client.deleteModule(moduleId);
+      dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+    } catch (error) {
+      console.error("Error deleting module:", error);
+    }
   };
 
   // ⭐⭐⭐ GREEN CODE — UPDATE MODULE ON SERVER
   const onUpdateModule = async (module: any) => {
-    await client.updateModule(module);
-
-    const newModules = modules.map((m: any) =>
-      m._id === module._id ? module : m
-    );
-
-    dispatch(setModules(newModules));
+    try {
+      await client.updateModule(module);
+      const newModules = modules.map((m: any) =>
+        m._id === module._id ? module : m
+      );
+      dispatch(setModules(newModules));
+    } catch (error) {
+      console.error("Error updating module:", error);
+    }
   };
 
   return (
@@ -113,7 +134,7 @@ export default function Modules() {
               />
             </div>
 
-            {module.lessons && (
+            {module.lessons && Array.isArray(module.lessons) && (
               <ListGroup className="wd-lessons rounded-0">
                 {module.lessons.map((lesson: any) => (
                   <ListGroup.Item

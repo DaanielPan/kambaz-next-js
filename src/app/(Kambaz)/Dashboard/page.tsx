@@ -11,7 +11,8 @@ import { setCourses } from "../Courses/reducer";
 export default function Dashboard() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const courses = useSelector((state: any) => state.coursesReducer);
+  const coursesState = useSelector((state: any) => state.coursesReducer);
+  const courses = Array.isArray(coursesState?.courses) ? coursesState.courses : [];
 
   const [course, setCourse] = useState<any>({
     name: "",
@@ -23,9 +24,17 @@ export default function Dashboard() {
   const fetchCourses = async () => {
     try {
       const c = await client.findMyCourses();
-      dispatch(setCourses(c));
+      // Ensure we always set an array
+      if (Array.isArray(c)) {
+        dispatch(setCourses(c));
+      } else {
+        console.error("API returned non-array data:", c);
+        dispatch(setCourses([]));
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching courses:", error);
+      // Set empty array on error to prevent .map() errors
+      dispatch(setCourses([]));
     }
   };
 

@@ -14,8 +14,9 @@ export default function KambazNavigation() {
   const links = [
     { label: "Dashboard", path: "/Dashboard", Icon: AiOutlineDashboard },
     { label: "Courses", path: "/Dashboard", Icon: LiaBookSolid },
-    { label: "Calendar", path: "/Calendar", Icon: IoCalendarOutline },
-    { label: "Inbox", path: "/Inbox", Icon: FaInbox },
+    // Calendar and Inbox routes not implemented yet - commented out to prevent 404 errors
+    // { label: "Calendar", path: "/Calendar", Icon: IoCalendarOutline },
+    // { label: "Inbox", path: "/Inbox", Icon: FaInbox },
     { label: "Labs", path: "/Labs", Icon: LiaCogSolid },
   ];
 

@@ -1,3 +1,5 @@
+"use client";
+
 const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 
 export default function EnvironmentVariables() {

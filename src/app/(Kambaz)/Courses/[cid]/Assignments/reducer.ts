@@ -1,7 +1,5 @@
-import * as db from "../../../Database";
-
 const initialState = {
-  assignments: db.assignments,
+  assignments: [] as any[],
 };
 
 export default function assignmentsReducer(state = initialState, action: any) {

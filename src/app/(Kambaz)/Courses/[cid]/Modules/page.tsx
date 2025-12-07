@@ -66,8 +66,9 @@ export default function Modules() {
 
   // DELETE MODULE — server + state
   const onRemoveModule = async (moduleId: string) => {
+    if (!cid) return;
     try {
-      await client.deleteModule(moduleId);
+      await client.deleteModule(cid, moduleId);
       dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
     } catch (error) {
       console.error("Error deleting module:", error);
@@ -76,8 +77,9 @@ export default function Modules() {
 
   // ⭐⭐⭐ GREEN CODE — UPDATE MODULE ON SERVER
   const onUpdateModule = async (module: any) => {
+    if (!cid) return;
     try {
-      await client.updateModule(module);
+      await client.updateModule(cid, module);
       const newModules = modules.map((m: any) =>
         m._id === module._id ? module : m
       );

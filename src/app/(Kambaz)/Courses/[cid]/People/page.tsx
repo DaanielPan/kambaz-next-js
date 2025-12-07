@@ -1,8 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database"; // Path is now one level shorter
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
+import * as client from "../../client";
 
 // Define the shape of your data objects
 type User = {
@@ -12,22 +13,42 @@ type User = {
   role: string;
 };
 
-type Enrollment = {
-  user: string;
-  course: string;
-};
-
 export default function People() {
   const { cid } = useParams();
-  const { users, enrollments } = db;
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Filter users based on their enrollment in the current course
-  const courseUsers = users.filter((user: User) =>
-    enrollments.some(
-      (enrollment: Enrollment) =>
-        enrollment.user === user._id && enrollment.course === cid
-    )
-  );
+  const fetchUsers = async () => {
+    if (!cid) return;
+    try {
+      setLoading(true);
+      const data = await client.findUsersForCourse(cid as string);
+      // Ensure we always set an array
+      if (Array.isArray(data)) {
+        setUsers(data);
+      } else {
+        console.error("API returned non-array data:", data);
+        setUsers([]);
+      }
+    } catch (error) {
+      console.error("Error fetching users for course:", error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [cid]);
+
+  if (loading) {
+    return (
+      <div id="wd-people-table">
+        <p>Loading users...</p>
+      </div>
+    );
+  }
 
   return (
     <div id="wd-people-table">
@@ -39,7 +60,7 @@ export default function People() {
           </tr>
         </thead>
         <tbody>
-          {courseUsers.map((user: User) => (
+          {users.map((user: User) => (
             <tr key={user._id}>
               <td className="text-nowrap">
                 <FaUserCircle className="me-2 fs-1 text-secondary" />

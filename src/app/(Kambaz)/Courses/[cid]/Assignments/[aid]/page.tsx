@@ -13,63 +13,100 @@ export default function AssignmentEditor() {
   const router = useRouter();
   const { cid, aid } = useParams();
 
-  const assignments = useSelector(
-    (state: any) => state.assignmentsReducer.assignments
+  const assignmentsState = useSelector(
+    (state: any) => state.assignmentsReducer
   );
+  const assignments = Array.isArray(assignmentsState?.assignments) 
+    ? assignmentsState.assignments 
+    : [];
 
-  const existing = assignments.find((a: any) => a._id === aid);
-
-  const [assignment, setAssignment] = useState<any>(
-    existing || {
-      name: "New Assignment",
-      description: "",
-      points: 100,
-      dueDate: "",
-      availableFrom: "",
-      availableUntil: "",
-    }
-  );
+  const [assignment, setAssignment] = useState<any>({
+    name: "New Assignment",
+    description: "",
+    points: 100,
+    dueDate: "",
+    availableFrom: "",
+    availableUntil: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
   const fetchAssignments = async () => {
-    const data = await client.findAssignmentsForModule(cid as string);
-    dispatch(setAssignments(data));
+    if (!cid) return;
+    setFetching(true);
+    try {
+      const data = await client.findAssignmentsForCourse(cid as string);
+      // Ensure we always set an array
+      if (Array.isArray(data)) {
+        dispatch(setAssignments(data));
 
-    if (aid !== "new") {
-      const found = data.find((a: any) => a._id === aid);
-      if (found) setAssignment(found);
+        if (aid !== "new") {
+          const found = data.find((a: any) => a._id === aid);
+          if (found) {
+            setAssignment(found);
+          } else {
+            console.error("Assignment not found:", aid);
+            router.push(`/Courses/${cid}/Assignments`);
+          }
+        }
+      } else {
+        console.error("API returned non-array data:", data);
+        dispatch(setAssignments([]));
+      }
+    } catch (error) {
+      console.error("Error fetching assignments:", error);
+      dispatch(setAssignments([]));
+      if (aid !== "new") {
+        router.push(`/Courses/${cid}/Assignments`);
+      }
+    } finally {
+      setFetching(false);
     }
   };
 
   useEffect(() => {
     fetchAssignments();
-  }, []);
+  }, [cid, aid]);
 
-const handleSave = async () => {
-  // declare updated BEFORE using it
-  let updated: any;
+  const handleSave = async () => {
+    if (!cid) return;
+    setLoading(true);
+    try {
+      let updated: any;
 
-  if (aid === "new") {
-    // CREATE
-    updated = await client.createAssignment(cid as string, assignment);
-    dispatch(setAssignments([...assignments, updated]));
-  } else {
-    // UPDATE
-    updated = await client.updateAssignment(assignment);
+      if (aid === "new") {
+        // CREATE
+        updated = await client.createAssignment(cid as string, assignment);
+        // Reload assignments to get latest state from server
+        await fetchAssignments();
+      } else {
+        // UPDATE
+        updated = await client.updateAssignment(cid as string, assignment);
+        // Reload assignments to get latest state from server
+        await fetchAssignments();
+      }
 
-    const newList = assignments.map((a: any) =>
-      a._id === updated._id ? updated : a
-    );
-
-    dispatch(setAssignments(newList));
-  }
-
-  router.push(`/Courses/${cid}/Assignments`);
-};
+      router.push(`/Courses/${cid}/Assignments`);
+    } catch (error) {
+      console.error("Error saving assignment:", error);
+      alert("Failed to save assignment. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   const handleCancel = () => {
     router.push(`/Courses/${cid}/Assignments`);
   };
+
+  if (fetching && aid !== "new") {
+    return (
+      <div id="wd-assignment-editor" style={{ maxWidth: "600px" }}>
+        <p>Loading assignment...</p>
+      </div>
+    );
+  }
 
   return (
     <div id="wd-assignment-editor" style={{ maxWidth: "600px" }}>
@@ -133,11 +170,11 @@ const handleSave = async () => {
       />
 
       <div className="d-flex justify-content-end gap-2">
-        <Button variant="secondary" onClick={handleCancel}>
+        <Button variant="secondary" onClick={handleCancel} disabled={loading}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={handleSave}>
-          Save
+        <Button variant="primary" onClick={handleSave} disabled={loading}>
+          {loading ? "Saving..." : "Save"}
         </Button>
       </div>
     </div>

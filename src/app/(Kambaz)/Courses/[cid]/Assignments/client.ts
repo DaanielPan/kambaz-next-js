@@ -1,30 +1,38 @@
 import axios from "axios";
 
-export const HTTP = process.env.NEXT_PUBLIC_HTTP_SERVER;
-export const API = `${HTTP}/api`;
+const axiosWithCredentials = axios.create({ withCredentials: true });
 
-export const findAssignmentsForModule = async (moduleId: string) => {
-  const response = await axios.get(`${API}/modules/${moduleId}/assignments`);
+const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+const COURSES_API = `${HTTP_SERVER}/api/courses`;
+
+// ⭐ Find assignments for a specific course
+export const findAssignmentsForCourse = async (courseId: string) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
   return response.data;
 };
 
-export const createAssignment = async (moduleId: string, assignment: any) => {
-  const response = await axios.post(
-    `${API}/modules/${moduleId}/assignments`,
+// ⭐ Create a new assignment for a course
+export const createAssignment = async (courseId: string, assignment: any) => {
+  const response = await axiosWithCredentials.post(
+    `${COURSES_API}/${courseId}/assignments`,
     assignment
   );
   return response.data;
 };
 
-export const updateAssignment = async (assignment: any) => {
-  const response = await axios.put(
-    `${API}/assignments/${assignment._id}`,
+// ⭐ Update an existing assignment
+export const updateAssignment = async (courseId: string, assignment: any) => {
+  const response = await axiosWithCredentials.put(
+    `${COURSES_API}/${courseId}/assignments/${assignment._id}`,
     assignment
   );
   return response.data;
 };
 
-export const deleteAssignment = async (assignmentId: string) => {
-  const response = await axios.delete(`${API}/assignments/${assignmentId}`);
+// ⭐ Delete an assignment
+export const deleteAssignment = async (courseId: string, assignmentId: string) => {
+  const response = await axiosWithCredentials.delete(
+    `${COURSES_API}/${courseId}/assignments/${assignmentId}`
+  );
   return response.data;
 };

@@ -5,10 +5,17 @@ const initialState = {
   export default function enrollmentsReducer(state = initialState, action: any) {
     switch (action.type) {
       case "setEnrollments":
-        return { ...state, enrollments: action.enrollments };
+        // Ensure enrollments is always an array
+        return { 
+          ...state, 
+          enrollments: Array.isArray(action.enrollments) ? action.enrollments : []
+        };
   
       case "addEnrollment":
-        return { ...state, enrollments: [...state.enrollments, action.enrollment] };
+        return { 
+          ...state, 
+          enrollments: [...state.enrollments, action.enrollment] 
+        };
   
       case "removeEnrollment":
         return {

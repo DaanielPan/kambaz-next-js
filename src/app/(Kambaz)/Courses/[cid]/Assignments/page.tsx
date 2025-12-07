@@ -16,8 +16,9 @@ export default function Assignments() {
   const assignments = Array.isArray(assignmentsState?.assignments) ? assignmentsState.assignments : [];
 
   const loadAssignments = async () => {
+    if (!cid) return;
     try {
-      const data = await client.findAssignmentsForModule(cid as string);
+      const data = await client.findAssignmentsForCourse(cid as string);
       // Ensure we always set an array
       if (Array.isArray(data)) {
         dispatch(setAssignments(data));
@@ -34,14 +35,17 @@ export default function Assignments() {
 
   useEffect(() => {
     loadAssignments();
-  }, []);
+  }, [cid]);
 
   const removeAssignment = async (id: string) => {
+    if (!cid) return;
     try {
-      await client.deleteAssignment(id);
-      dispatch(setAssignments(assignments.filter((a: any) => a._id !== id)));
+      await client.deleteAssignment(cid as string, id);
+      // Reload assignments to get latest state from server
+      await loadAssignments();
     } catch (error) {
       console.error("Error deleting assignment:", error);
+      alert("Failed to delete assignment. Please try again.");
     }
   };
 

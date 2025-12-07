@@ -51,3 +51,39 @@ export const updateUser = async (user: any) => {
   );
   return response.data;
 };
+
+// ⭐ FIND ALL USERS
+export const findAllUsers = async () => {
+  const response = await axiosWithCredentials.get(USERS_API);
+  return response.data;
+};
+
+// ⭐ FIND USERS BY ROLE
+export const findUsersByRole = async (role: string) => {
+  const response = await axiosWithCredentials.get(`${USERS_API}?role=${role}`);
+  return response.data;
+};
+
+// ⭐ FIND USERS BY PARTIAL NAME
+export const findUsersByPartialName = async (name: string) => {
+  const response = await axiosWithCredentials.get(`${USERS_API}?name=${name}`);
+  return response.data;
+};
+
+// ⭐ FIND USER BY ID
+export const findUserById = async (id: string) => {
+  const response = await axiosWithCredentials.get(`${USERS_API}/${id}`);
+  return response.data;
+};
+
+// ⭐ DELETE USER
+export const deleteUser = async (userId: string) => {
+  const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}`);
+  return response.data;
+};
+
+// ⭐ CREATE USER
+export const createUser = async (user: any) => {
+  const response = await axiosWithCredentials.post(`${USERS_API}`, user);
+  return response.data;
+};

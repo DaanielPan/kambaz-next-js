@@ -1,8 +1,8 @@
 "use client";
-import { useParams } from "next/navigation";
-import * as db from "../../../../Database";
+import { useState } from "react";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
+import PeopleDetails from "../Details";
 
 // Define the shape of your data objects
 type User = {
@@ -12,23 +12,9 @@ type User = {
   role: string;
 };
 
-type Enrollment = {
-  user: string;
-  course: string;
-};
-
-export default function PeopleTable() {
-  const { cid } = useParams();
-  const { users, enrollments } = db;
-
-  // Filter users based on their enrollment in the current course
-  const courseUsers = users.filter((user: User) =>
-    enrollments.some(
-      (enrollment: Enrollment) =>
-        enrollment.user === user._id && enrollment.course === cid
-    )
-  );
-
+export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) {
+  const [showDetails, setShowDetails] = useState(false);
+  const [showUserId, setShowUserId] = useState<string | null>(null);
   return (
     <div id="wd-people-table">
       <Table striped>
@@ -39,17 +25,33 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {courseUsers.map((user: User) => (
+          {users.map((user: User) => (
             <tr key={user._id}>
               <td className="text-nowrap">
                 <FaUserCircle className="me-2 fs-1 text-secondary" />
-                {user.firstName} {user.lastName}
+                <span
+                  onClick={() => {
+                    setShowDetails(true);
+                    setShowUserId(user._id);
+                  }}
+                >
+                  {user.firstName} {user.lastName}
+                </span>
               </td>
               <td>{user.role}</td>
             </tr>
           ))}
         </tbody>
       </Table>
+      {showDetails && (
+        <PeopleDetails
+          uid={showUserId}
+          onClose={() => {
+            setShowDetails(false);
+            fetchUsers();
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, useParams } from "next/navigation";
 import * as client from "./client";
@@ -14,22 +14,32 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const assignmentsState = useSelector((state: any) => state.assignments);
   const assignments = Array.isArray(assignmentsState?.assignments) ? assignmentsState.assignments : [];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadAssignments = async () => {
     if (!cid) return;
+    setLoading(true);
+    setError(null);
     try {
+      console.log("Fetching assignments for course:", cid);
       const data = await client.findAssignmentsForCourse(cid as string);
+      console.log("Assignments data received:", data);
       // Ensure we always set an array
       if (Array.isArray(data)) {
         dispatch(setAssignments(data));
+        console.log("Set assignments:", data.length);
       } else {
         console.error("API returned non-array data:", data);
         dispatch(setAssignments([]));
+        setError("Invalid data format received from server");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching assignments:", error);
-      // Set empty array on error to prevent .map() errors
       dispatch(setAssignments([]));
+      setError(error.response?.data?.message || error.message || "Failed to load assignments. Please check your server connection.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,34 +71,55 @@ export default function Assignments() {
         + Assignment
       </Button>
 
-      <Row xs={1} md={3}>
-        {assignments.map((a: any) => (
-          <Col key={a._id}>
-            <Card>
-              <Card.Body>
-                <Card.Title>{a.name}</Card.Title>
-                <Card.Text>{a.description}</Card.Text>
+      {loading && <p>Loading assignments...</p>}
 
-                <Button
-                  variant="primary"
-                  onClick={() =>
-                    router.push(`/Courses/${cid}/Assignments/${a._id}`)
-                  }
-                >
-                  Edit
-                </Button>
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          <strong>Error:</strong> {error}
+          <br />
+          <small>Check the browser console for more details.</small>
+        </div>
+      )}
 
-                <Button
-                  variant="danger"
-                  onClick={() => removeAssignment(a._id)}
-                >
-                  Delete
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {!loading && !error && assignments.length === 0 && (
+        <div className="alert alert-info" role="alert">
+          <p>No assignments found for this course.</p>
+          <p>Click the "+ Assignment" button to create your first assignment.</p>
+        </div>
+      )}
+
+      {!loading && assignments.length > 0 && (
+        <Row xs={1} md={3}>
+          {assignments.map((a: any) => (
+            <Col key={a._id}>
+              <Card>
+                <Card.Body>
+                  <Card.Title>{a.name || a.title}</Card.Title>
+                  <Card.Text>{a.description || "No description"}</Card.Text>
+                  {a.points && <Card.Text><small>Points: {a.points}</small></Card.Text>}
+
+                  <Button
+                    variant="primary"
+                    className="me-2"
+                    onClick={() =>
+                      router.push(`/Courses/${cid}/Assignments/${a._id}`)
+                    }
+                  >
+                    Edit
+                  </Button>
+
+                  <Button
+                    variant="danger"
+                    onClick={() => removeAssignment(a._id)}
+                  >
+                    Delete
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
   );
 }

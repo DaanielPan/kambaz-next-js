@@ -55,3 +55,4 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[];
     </div>
   );
 }
+
